@@ -3,6 +3,7 @@ import json
 
 from scrapyautoria.tutorial.tutorial.items import TutorialItem
 
+
 class AutoRia(scrapy.Spider):
     name = 'auto_ria'
     allowed_domains = ['auto.ria.com']
@@ -25,7 +26,12 @@ class AutoRia(scrapy.Spider):
 
             car_item = TutorialItem()
             car_item['model'] = model.strip()
+            # car_item['year'] = year.strip()
             car_item['mileage'] = mileage.strip()
+            # car_item['price_uah'] = price_uah.strip()
+            # car_item['price_dollar'] = price_dollar.strip()
+            # car_item['vin_code'] = vin_code.strip()
+            # car_item['link'] = link.strip()
 
 
             next_page = response.css('span.page-item.next.text-r a::attr(href)').get()
