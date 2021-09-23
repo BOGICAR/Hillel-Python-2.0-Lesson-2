@@ -1,7 +1,7 @@
 import scrapy
 import json
 
-from tutorial.items import TutorialItem
+from scrapyautoria.tutorial.tutorial.items import TutorialItem
 
 class AutoRia(scrapy.Spider):
     name = 'auto_ria'
