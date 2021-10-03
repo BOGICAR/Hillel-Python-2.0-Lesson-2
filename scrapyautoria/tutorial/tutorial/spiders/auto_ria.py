@@ -14,13 +14,16 @@ class AutoRia(scrapy.Spider):
     def parse(self, response):
 
         for car in response.css('div.content'):
-            model = car.css('div.head-ticket > div > a > span > font > font::text').get()
-            year = car.css('div.head-ticket > div > a > font > font::text').get()
-            mileage = car.css('div.definition-data > ul > li.item-char.js-race > font > font::text').get()
-            price_uah = car.css('div.price-ticket > span > span.i-block > span > font > font::text').get()
-            price_dollar = car.css('div.price-ticket > span > span:nth-child(1) > font > font::text').get()
-            vin_code = car.css('div.definition-data > div > span.label-vin > span:nth-child(2) > font > font::text').get()
-            link = car.css('div.head-ticket > div > a::text').get()
+
+            # catalogSearchAT > div.standart-view.m-view.result-explore > section.ticket-item.visited > div.content-bar > div.content > div.head-ticket > div > a
+
+            model = car.css('div.head-ticket > div > a > span::text').get()
+            year = car.css('div.head-ticket > div > a::text').get()
+            mileage = car.css('div.definition-data > ul > li.item-char.js-race::text').get().strip()
+            price_uah = car.css('div.price-ticket > span > span.i-block > span::text').get().strip()
+            price_dollar = car.css('div.price-ticket > span > span:nth-child(1)::text').get().strip()
+            vin_code = car.css('div.definition-data > div > span.label-vin > span:nth-child(2)::text').get().strip()
+            link = car.css('div.head-ticket > div > a::attr(href)').get().strip()
 
             car_item = TutorialItem()
             car_item['model'] = model.strip()
@@ -30,7 +33,6 @@ class AutoRia(scrapy.Spider):
             car_item['price_dollar'] = price_dollar.strip()
             car_item['vin_code'] = vin_code.strip() if vin_code else None
             car_item['link'] = link.strip()
-
 
             next_page = response.css('pagination > nav > span.page-item.next.text-r > a::attr(href)').get()
             if next_page is not None:
