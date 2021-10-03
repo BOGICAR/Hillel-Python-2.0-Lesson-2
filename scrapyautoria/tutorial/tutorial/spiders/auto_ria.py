@@ -31,7 +31,8 @@ class AutoRia(scrapy.Spider):
             car_item['vin_code'] = vin_code.strip() if vin_code else None
             car_item['link'] = link.strip()
 
-            next_page = response.css('span.page-item.next.text-r a::attr(href)').get()
+
+            next_page = response.css('pagination > nav > span.page-item.next.text-r > a::attr(href)').get()
             if next_page is not None:
                 yield response.follow(next_page, callback=self.parse)
 
