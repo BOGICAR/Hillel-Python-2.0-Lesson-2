@@ -14,16 +14,13 @@ class AutoRia(scrapy.Spider):
     def parse(self, response):
 
         for car in response.css('div.content'):
-
-            # catalogSearchAT > div.standart-view.m-view.result-explore > section.ticket-item.visited > div.content-bar > div.content > div.head-ticket > div > a
-
             model = car.css('div.head-ticket > div > a > span::text').get()
             year = car.css('div.head-ticket > div > a::text').get()
-            mileage = car.css('div.definition-data > ul > li.item-char.js-race::text').get().strip()
-            price_uah = car.css('div.price-ticket > span > span.i-block > span::text').get().strip()
-            price_dollar = car.css('div.price-ticket > span > span:nth-child(1)::text').get().strip()
-            vin_code = car.css('div.definition-data > div > span.label-vin > span:nth-child(2)::text').get().strip()
-            link = car.css('div.head-ticket > div > a::attr(href)').get().strip()
+            mileage = car.css('div.definition-data > ul > li.item-char.js-race::text').get()
+            price_uah = car.css('div.price-ticket > span > span.i-block > span::text').get()
+            price_dollar = car.css('div.price-ticket > span > span:nth-child(1)::text').get()
+            vin_code = car.css('div.definition-data > div > span.label-vin > span:nth-child(2)::text').get()
+            link = car.css('div.head-ticket > div > a::attr(href)').get()
 
             car_item = TutorialItem()
             car_item['model'] = model.strip()
