@@ -1,5 +1,5 @@
 import scrapy
-import json
+# import json
 
 from tutorial.items import TutorialItem
 
@@ -31,11 +31,12 @@ class AutoRia(scrapy.Spider):
             car_item['vin_code'] = vin_code.strip() if vin_code else None
             car_item['link'] = link.strip()
 
+            yield car_item
             next_page = response.css('pagination > nav > span.page-item.next.text-r > a::attr(href)').get()
             if next_page is not None:
                 yield response.follow(next_page, callback=self.parse)
 
-            filename = "auto_ria.json"
-            with open(filename, "w", encoding="utf8") as f:
-                f.write(json.dumps(vars(car_item), ensure_ascii=False))
-                self.log(f"Saved file {filename}")
+            # filename = "auto_ria.json"
+            # with open(filename, "w", encoding="utf8") as f:
+            #     f.write(json.dumps(vars(car_item), ensure_ascii=False))
+            #     self.log(f"Saved file {filename}")
