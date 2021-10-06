@@ -32,7 +32,7 @@ class AutoRia(scrapy.Spider):
             car_item['link'] = link.strip()
 
             yield car_item
-            next_page = response.css('pagination > nav > span.page-item.next.text-r > a::attr(href)').get()
+            next_page = response.css('span.page-item > link::attr(href)').get()
             if next_page is not None:
                 yield response.follow(next_page, callback=self.parse)
 
